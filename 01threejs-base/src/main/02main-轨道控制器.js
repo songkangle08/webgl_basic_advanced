@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 // console.log(Three,'Three')
 
-// 目标：物体的缩放
+// 目标：使用控制器查看3d物体
 
 // 1.创建场景
 const scene = new Three.Scene();
@@ -25,20 +25,8 @@ const cubeMaterial = new Three.MeshBasicMaterial({color:0xffff00});
 // 根级几何体和材质创建物体
 const cube = new Three.Mesh(cubGeomerty,cubeMaterial);
 
-// 修改物体的位置
-// cube.position.set(5,0,0)
-// cube.position.x = 3;
-// cube.scale.set(3,2,1);
-// cube.scale.x = 5;
-
-// 物体的旋转
-console.log(Math.PI / 4,'Math.PI / 4');
-cube.rotation.set(Math.PI / 4,0,0);
-
 // 将几何体添加到场景当中
 scene.add(cube);
-
-console.log(cube,'cube')
 
 // 初始化渲染器
 const renderer = new Three.WebGLRenderer();
@@ -51,21 +39,16 @@ document.body.appendChild(renderer.domElement);
 // 使用渲染器，通过相机将场景渲染进来
 // renderer.render(scene,camera);
 
+
+
+// 场景  相机  材质  把相机和材质添加到场景中，用渲染器把场景渲染出来
+
+
+
 // 创建轨道控制器
 const controls = new OrbitControls(camera,renderer.domElement);  // 相机围绕着目标进行轨道进行运动 360旋转
 
-// 添加坐标轴辅助器
-const axesHelper = new Three.AxesHelper(5);
-scene.add(axesHelper);
-
 function render(){
-    // 物体的移动
-    cube.position.x += 0.01;
-    // cube.rotation.x += 0.01;
-    if(cube.position.x  > 5){
-        cube.position.x = 0;
-        cube.rotation.x = 0;
-    }
     renderer.render(scene,camera);
     // 浏览器渲染贞，每一帧执行一次,
     requestAnimationFrame(render)

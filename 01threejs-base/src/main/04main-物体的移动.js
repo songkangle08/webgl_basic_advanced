@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 // console.log(Three,'Three')
 
-// 目标：物体的缩放
+// 目标：控制3d物体的移动
 
 // 1.创建场景
 const scene = new Three.Scene();
@@ -27,13 +27,8 @@ const cube = new Three.Mesh(cubGeomerty,cubeMaterial);
 
 // 修改物体的位置
 // cube.position.set(5,0,0)
-// cube.position.x = 3;
-// cube.scale.set(3,2,1);
-// cube.scale.x = 5;
+cube.position.x = 3;
 
-// 物体的旋转
-console.log(Math.PI / 4,'Math.PI / 4');
-cube.rotation.set(Math.PI / 4,0,0);
 
 // 将几何体添加到场景当中
 scene.add(cube);
@@ -55,16 +50,13 @@ document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera,renderer.domElement);  // 相机围绕着目标进行轨道进行运动 360旋转
 
 // 添加坐标轴辅助器
-const axesHelper = new Three.AxesHelper(5);
+const axesHelper = new Three.AxesHelper(10);
 scene.add(axesHelper);
 
 function render(){
-    // 物体的移动
     cube.position.x += 0.01;
-    // cube.rotation.x += 0.01;
     if(cube.position.x  > 5){
         cube.position.x = 0;
-        cube.rotation.x = 0;
     }
     renderer.render(scene,camera);
     // 浏览器渲染贞，每一帧执行一次,
