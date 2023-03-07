@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 // console.log(Three,'Three')
 
-// 目标：物体的缩放
+// 目标：通过Clock跟踪时间处理动画
 
 // 1.创建场景
 const scene = new Three.Scene();
@@ -38,8 +38,6 @@ cube.rotation.set(Math.PI / 4,0,0);
 // 将几何体添加到场景当中
 scene.add(cube);
 
-console.log(cube,'cube')
-
 // 初始化渲染器
 const renderer = new Three.WebGLRenderer();
 // 设置渲染的尺寸大小
@@ -58,16 +56,24 @@ const controls = new OrbitControls(camera,renderer.domElement);  // 相机围绕
 const axesHelper = new Three.AxesHelper(5);
 scene.add(axesHelper);
 
+// 设置时钟
+const clock = new Three.Clock();
+
+
 function render(){
-    // 物体的移动
-    cube.position.x += 0.01;
-    // cube.rotation.x += 0.01;
-    if(cube.position.x  > 5){
-        cube.position.x = 0;
-        cube.rotation.x = 0;
-    }
+    // // time原来越大
+    // let t = time / 1000 % 5;
+    // cube.position.x = t * 1;
+    // console.log(t * 1);
+    // 获取时钟运行的总时长
+    let time = clock.getElapsedTime();
+    let deltaTime = clock.getDelta();
+    console.log("时钟运行的总时长",time);
+    // console.log("两次获取时间的间隔时间",deltaTime);
+
     renderer.render(scene,camera);
     // 浏览器渲染贞，每一帧执行一次,
+    // 每一帧动画都是
     requestAnimationFrame(render)
 }
 render();
