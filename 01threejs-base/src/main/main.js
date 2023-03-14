@@ -6,7 +6,7 @@ import gsap from "gsap";
 // 应用图形用户界面
 import * as dat from 'dat.gui';
 
-// 目标：通过js控制全屏和退出全屏
+// 目标：main-dat.gui应用图形界面更改变量
 
 // 1.创建场景
 const scene = new Three.Scene();

@@ -2,21 +2,20 @@ import * as THREE from "three";
 // 导入轨道控制器
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-// 目标：通过Clock跟踪时间处理动画
+// 创建场景
+const scene = new THREE.Scene();
 
-// 1.创建场景
-const scene = new Three.Scene();
-
-// 2. 创建相机（各种各样的相机）
-const camera = new Three.PerspectiveCamera(
+// 创建摄像机 -- 透视投影
+const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
-); // 透视相机
+);
 
-// 设置了相机位置
+// 设置相机位置
 camera.position.set(0, 0, 10);
+// 场景添加照相机
 scene.add(camera);
 
 // 添加物体
@@ -63,23 +62,16 @@ const controls = new OrbitControls(camera, renderer.domElement); //  相机围�
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 
-// 设置时钟
-const clock = new Three.Clock();
-
 function render() {
-  // // time原来越大
-  // let t = time / 1000 % 5;
-  // cube.position.x = t * 1;
-  // console.log(t * 1);
-  // 获取时钟运行的总时长
-  let time = clock.getElapsedTime();
-  let deltaTime = clock.getDelta();
-  console.log("时钟运行的总时长", time);
-  // console.log("两次获取时间的间隔时间",deltaTime);
-
+  cube.position.x += 0.01;
+  cube.rotation.x += 0.01;
+  if (cube.position.x >= 5) {
+    cube.position.x = 0;
+    cube.rotation.x = 0;
+  }
+  // 使用渲染器，通过相机将场景渲染起来
   renderer.render(scene, camera);
-  // 浏览器渲染贞，每一帧执行一次,
-  // 每一帧动画都是
+  // 每一帧将页面渲染一次
   requestAnimationFrame(render);
 }
 render();
