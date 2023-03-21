@@ -6,50 +6,35 @@ import gsap from "gsap";
 // 应用图形用户界面
 import * as dat from 'dat.gui';
 
-// 目标：打造酷炫的三角形
+// 目标：使用BufferGeomertry创建矩形
 
 // 1.创建场景
 const scene = new Three.Scene();
+
 // 2. 创建相机（各种各样的相机）
 const camera = new Three.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000); // 透视相机
+
 // 设置了相机位置
 camera.position.set(0,0,10);
 scene.add(camera);
 
 // 添加物体
 // 创建几何体
-
-for(let i = 0;i<50;i++){
-    // 每一个三角形,需要3个顶点,每个顶点需要3个值
-    const geometry = new Three.BufferGeometry();
-    const positionArray =  new Float32Array(9);
-    for(let j = 0;j<9;j++){
-        positionArray[j] = Math.random() * 10 -5;
-    }
-    let color = new Three.Color(Math.random(),Math.random(),Math.random())
-    const material = new Three.MeshBasicMaterial({color:color,opacity:Math.random(),transparent:true})
-    geometry.setAttribute('position',new Three.BufferAttribute(positionArray,3));
-    const mesh = new Three.Mesh(geometry,material);
-    // 4. 添加到场景中
-    scene.add(mesh);
-}
-
-
-
-// const vertices = new Float32Array([
-//     -1.0,-1.0,1.0,
-//     1.0,-1.0,1.0,
-//     1.0,1.0,1.0,
-//     1.0,1.0,1.0,
-//     -1.0,1.0,1.0,
-//     -1.0,-1.0,1.0
-// ])
-// const material = new Three.MeshBasicMaterial({color:0xffff00})
-// geometry.setAttribute('position',new Three.BufferAttribute(vertices,3));
-// const mesh = new Three.Mesh(geometry,material);
-// console.log(mesh);
-// // 4. 添加到场景中
-// scene.add(mesh);
+const geometry = new Three.BufferGeometry();
+const vertices = new Float32Array([
+    -1.0,-1.0,1.0,
+    1.0,-1.0,1.0,
+    1.0,1.0,1.0,
+    1.0,1.0,1.0,
+    -1.0,1.0,1.0,
+    -1.0,-1.0,1.0
+])
+const material = new Three.MeshBasicMaterial({color:0xffff00})
+geometry.setAttribute('position',new Three.BufferAttribute(vertices,3));
+const mesh = new Three.Mesh(geometry,material);
+console.log(mesh);
+// 4. 添加到场景中
+scene.add(mesh);
 
 // 初始化渲染器
 const renderer = new Three.WebGLRenderer();
