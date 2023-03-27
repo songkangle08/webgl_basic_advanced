@@ -6,7 +6,7 @@ import gsap from "gsap";
 // 应用图形用户界面
 import * as dat from 'dat.gui';
 
-// 目标：基础材质与纹理
+// 目标：打造酷炫的三角形
 
 // 1.创建场景
 const scene = new Three.Scene();
@@ -16,26 +16,40 @@ const camera = new Three.PerspectiveCamera(75,window.innerWidth/window.innerHeig
 camera.position.set(0,0,10);
 scene.add(camera);
 
-
-// 导入纹理
-const textureLoader = new Three.TextureLoader();
-const doorColorTexture = textureLoader.load();
-
 // 添加物体
 // 创建几何体
-const cubeGeomerty = new Three.BoxBufferGeometry(1,1,1);
-// 材质
-const basicMaterial = new Three.MeshBasicMaterial({
-    color: "#ffff00",
-    map: doorColorTexture,  // 纹理
-})
-const cube = new Three.Mesh(cubeGeomerty,basicMaterial);
-scene.add(cube);
+
+for(let i = 0;i<50;i++){
+    // 每一个三角形,需要3个顶点,每个顶点需要3个值
+    const geometry = new Three.BufferGeometry();
+    const positionArray =  new Float32Array(9);
+    for(let j = 0;j<9;j++){
+        positionArray[j] = Math.random() * 10 -5;
+    }
+    let color = new Three.Color(Math.random(),Math.random(),Math.random())
+    const material = new Three.MeshBasicMaterial({color:color,opacity:Math.random(),transparent:true})
+    geometry.setAttribute('position',new Three.BufferAttribute(positionArray,3));
+    const mesh = new Three.Mesh(geometry,material);
+    // 4. 添加到场景中
+    scene.add(mesh);
+}
 
 
 
-
-
+// const vertices = new Float32Array([
+//     -1.0,-1.0,1.0,
+//     1.0,-1.0,1.0,
+//     1.0,1.0,1.0,
+//     1.0,1.0,1.0,
+//     -1.0,1.0,1.0,
+//     -1.0,-1.0,1.0
+// ])
+// const material = new Three.MeshBasicMaterial({color:0xffff00})
+// geometry.setAttribute('position',new Three.BufferAttribute(vertices,3));
+// const mesh = new Three.Mesh(geometry,material);
+// console.log(mesh);
+// // 4. 添加到场景中
+// scene.add(mesh);
 
 // 初始化渲染器
 const renderer = new Three.WebGLRenderer();
@@ -53,6 +67,9 @@ controls.enableDamping = true;
 const axesHelper = new Three.AxesHelper(5);
 scene.add(axesHelper);
 
+
+
+
 function render(){
     controls.update();
     renderer.render(scene,camera);
@@ -61,3 +78,4 @@ function render(){
     requestAnimationFrame(render)
 }
 render();
+
